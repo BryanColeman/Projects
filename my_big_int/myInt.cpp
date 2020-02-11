@@ -14,7 +14,7 @@
 #include"myInt.h"
 using namespace std;
 
-MyInt::MyInt()								//default sets MyInt to 0
+MyInt::MyInt()					//default sets MyInt to 0
 {
 	size = 1;
 	capacity = 5;
@@ -22,9 +22,9 @@ MyInt::MyInt()								//default sets MyInt to 0
 	arrInt[0] = 0;
 }
 
-MyInt::MyInt(int mi)						//sets MyInt from an integer
+MyInt::MyInt(int mi)				//sets MyInt from an integer
 {
-	if(mi < 0)								//if number less then 0 set to 0
+	if(mi < 0)				//if number less then 0 set to 0
 	{
 		size = 1;
 		capacity = 5;
@@ -37,13 +37,13 @@ MyInt::MyInt(int mi)						//sets MyInt from an integer
 		int getSize = 0;
 		capacity = 5;
 		arrInt = new int[capacity];
-		do									//do while to get size for size and capacity
+		do				//do while to get size for size and capacity
 		{
 			getSize++;
 			temp /= 10;
 		}while(temp);
 		
-		while(capacity <= getSize)			//set capacity and size
+		while(capacity <= getSize)	//set capacity and size
 			grow();
 		size = getSize;
 		
@@ -53,7 +53,7 @@ MyInt::MyInt(int mi)						//sets MyInt from an integer
 			mi /= 10;
 		}
 	}
-	killLeadingZeros();						//i always make this call to make sure any leading zeros get deleted
+	killLeadingZeros();				//i always make this call to make sure any leading zeros get deleted
 }
 
 MyInt::MyInt(const char * mc)				//set a c string to the array of ints
@@ -69,7 +69,7 @@ MyInt::MyInt(const char * mc)				//set a c string to the array of ints
 	
 	for(int i = 0; i < size; i++)
 	{
-		if(!(isdigit(mc[i])))				//of there is anythis besides a digit set the MyInt to 0
+		if(!(isdigit(mc[i])))			//of there is anythis besides a digit set the MyInt to 0
 		{
 			delete [] arrInt;
 			capacity = 5;
@@ -80,7 +80,7 @@ MyInt::MyInt(const char * mc)				//set a c string to the array of ints
 			break;
 		}
 	}
-	if(counter == 0)						//easy loop to see the array from the chars
+	if(counter == 0)				//easy loop to see the array from the chars
 	{
 		for(int i = 0; i < size; i++)
 		{
@@ -102,7 +102,7 @@ MyInt::MyInt(const MyInt& mi)				//takes a MyInt and sets it to another
 	killLeadingZeros();
 }
 
-MyInt& MyInt::operator=(const MyInt& mi)	//overload = to take a MyInt and set it to another.
+MyInt& MyInt::operator=(const MyInt& mi)		//overload = to take a MyInt and set it to another.
 {
 	while(capacity < mi.capacity)
 		grow();
@@ -115,7 +115,7 @@ MyInt& MyInt::operator=(const MyInt& mi)	//overload = to take a MyInt and set it
 	return *this;
 }
 
-MyInt::~MyInt()								//deconstructor
+MyInt::~MyInt()						//deconstructor
 {
 	delete [] arrInt;
 	size = 0;
@@ -123,7 +123,7 @@ MyInt::~MyInt()								//deconstructor
 	arrInt = NULL;
 }
 
-void MyInt::grow()							//simple grow function very similar to the one we did in class
+void MyInt::grow()					//simple grow function very similar to the one we did in class
 {	
 	int newCap = capacity + 5;
 	int * newArrInt = new int[newCap];
@@ -138,15 +138,15 @@ void MyInt::grow()							//simple grow function very similar to the one we did i
 
 void MyInt::killLeadingZeros()				//function to get rid of leading zeros i call this a lot just in case
 {
-	int theNumIsZero = 0;					//if the number is zero we must make sure it 
-											//doesnt go down to nothing and keep one of the zeros
+	int theNumIsZero = 0;				//if the number is zero we must make sure it 
+							//doesnt go down to nothing and keep one of the zeros
 	for(int i = 0; i < size; i++)
 	{
 		if(arrInt[i] > 0)
 			theNumIsZero++; 
 	}
-	while(arrInt[0] == 0 && theNumIsZero > 0)			//while loop that shifts to the left and gets ride of that
-	{													//zero until no more leading zeros
+	while(arrInt[0] == 0 && theNumIsZero > 0)	//while loop that shifts to the left and gets ride of that
+	{						//zero until no more leading zeros
 		for(int i = 0; i < size - 1; i++)
 			arrInt[i] = arrInt[i + 1];
 		size--;
@@ -158,7 +158,7 @@ void MyInt::killLeadingZeros()				//function to get rid of leading zeros i call 
 		shrink();
 }
 
-void MyInt::shrink()									//exactly the same as grow but backwards
+void MyInt::shrink()					//exactly the same as grow but backwards
 {
 	int newCap = capacity - 5;
 	int * newArrInt = new int[newCap];
@@ -171,7 +171,7 @@ void MyInt::shrink()									//exactly the same as grow but backwards
 
 }
 
-ostream& operator<<(ostream& out, const MyInt& mi)		//extremely easy ostream overload
+ostream& operator<<(ostream& out, const MyInt& mi)	//extremely easy ostream overload
 {
 	for(int i = 0; i < mi.size; i++)
 		out << mi.arrInt[i];
@@ -183,26 +183,26 @@ istream& operator>>(istream& in, MyInt& mi)
 	mi.capacity = 5;
 	mi.size = 0;
 	int i = 0;
-	in >> ws;											//ws is a c++ function that clears whitespace
-	while(isdigit(in.peek()))							//while we peek and is digit loop
+	in >> ws;					//ws is a c++ function that clears whitespace
+	while(isdigit(in.peek()))			//while we peek and is digit loop
 	{
-		char c = '\0';									//set char to \0
-		in.get(c);										//get the digit we peeked
-		mi.arrInt[i] = c - '0';							//set digit to arrInt index
+		char c = '\0';				//set char to \0
+		in.get(c);				//get the digit we peeked
+		mi.arrInt[i] = c - '0';			//set digit to arrInt index
 		i++;											
-		if(mi.capacity <= i)							//make sure we are growing as we need
+		if(mi.capacity <= i)			//make sure we are growing as we need
 			mi.grow();
 	}
-	mi.size = i;										//set size to i
+	mi.size = i;					//set size to i
 	return in;
 
 }
 
 bool operator==(const MyInt& valueOne, const MyInt& valueTwo)
 {
-	if(valueOne.size != valueTwo.size)							//if they have different sizes obviously not equal
-		return false;											//this is where deleting leading zeros is important
-	for(int i = 0; i < valueOne.size; i++)						//if any numbers are different the number is not equal
+	if(valueOne.size != valueTwo.size)			//if they have different sizes obviously not equal
+		return false;					//this is where deleting leading zeros is important
+	for(int i = 0; i < valueOne.size; i++)			//if any numbers are different the number is not equal
 	{
 		if(valueOne.arrInt[i] != valueTwo.arrInt[i])
 			return false;
@@ -212,16 +212,16 @@ bool operator==(const MyInt& valueOne, const MyInt& valueTwo)
 
 bool operator<=(const MyInt& valueOne, const MyInt& valueTwo)
 {
-	if(valueOne == valueTwo)									//if they are equal return true
+	if(valueOne == valueTwo)				//if they are equal return true
                 return true;
-	if(valueOne < valueTwo)										//if they are less return true
+	if(valueOne < valueTwo)					//if they are less return true
 		return true;
 	return false;
 }
 
 bool operator>=(const MyInt& valueOne, const MyInt& valueTwo)
 {
-	if(valueOne == valueTwo)									//similar to above
+	if(valueOne == valueTwo)				//similar to above
 		return true;
 	if(valueOne > valueTwo)
 		return true;
@@ -230,7 +230,7 @@ bool operator>=(const MyInt& valueOne, const MyInt& valueTwo)
 
 bool operator<(const MyInt& valueOne, const MyInt& valueTwo)
 {
-	if(valueOne.size < valueTwo.size)							//if valueone size is less its less then
+	if(valueOne.size < valueTwo.size)			//if valueone size is less its less then
 		return true;
 	if(valueOne.size > valueTwo.size)
 		return false;
@@ -266,10 +266,10 @@ MyInt operator+(const MyInt& valueOne, const MyInt& valueTwo)
 {
 	MyInt tempArr;
 	int len = 0;
-	int carryVObigger = 0;										//counters to see whihc one is larger
+	int carryVObigger = 0;					//counters to see whihc one is larger
 	int carryVTbigger = 0;
 	
-	if(valueOne.size < valueTwo.size)							//always makes enough room incase carry(gets taken care of later)
+	if(valueOne.size < valueTwo.size)			//always makes enough room incase carry(gets taken care of later)
 	{
 		carryVTbigger = 1;
 		len = valueTwo.size + 1;
@@ -293,9 +293,9 @@ MyInt operator+(const MyInt& valueOne, const MyInt& valueTwo)
 
 	for(int i = tempArr.size - 1; i >= 0; i--)
 	{
-			if(valOneSize < 0 && valTwoSize != -1)							//checks to see which case we need to use
+			if(valOneSize < 0 && valTwoSize != -1)					//checks to see which case we need to use
 			{																//and adds the carry then mods by ten so incase result is for example	
-					if(carryVObigger == 1)									//19 we get 9
+					if(carryVObigger == 1)					//19 we get 9
 							tempArr.arrInt[i] = carry;
 					else
 					{
@@ -327,8 +327,8 @@ MyInt operator+(const MyInt& valueOne, const MyInt& valueTwo)
 			valOneSize--;
 			valTwoSize--;
 	}
-	tempArr.killLeadingZeros();												//killLeadingZeros sets the number to the correct size
-	while(tempArr.capacity > tempArr.size + 5)								//shrink if we need to
+	tempArr.killLeadingZeros();					//killLeadingZeros sets the number to the correct size
+	while(tempArr.capacity > tempArr.size + 5)			//shrink if we need to
 			tempArr.shrink();
 	return tempArr;
 }
@@ -350,8 +350,8 @@ MyInt operator-(const MyInt& valueOne, const MyInt& valueTwo)
 	int valOneSize = valueOne.size - 1;
     int valTwoSize = valueTwo.size - 1;
 		
-	if(valueOne <= valueTwo)									//if valueOne is <= to valueTwo set the number to zero 
-	{															//and shrink as we need
+	if(valueOne <= valueTwo)					//if valueOne is <= to valueTwo set the number to zero 
+	{								//and shrink as we need
 		tempArr = 0;
 		tempArr.killLeadingZeros();
 		while(tempArr.capacity > tempArr.size)
@@ -414,12 +414,12 @@ MyInt operator*(const MyInt& valueOne, const MyInt& valueTwo)
 	int result = 0;
 	int zeroCounter = 0;
 	int counterTwo = 0;
-	for(int i = valueTwoSize; i >= 0; i--)					//loops through and does the exact same thing as done on paper
+	for(int i = valueTwoSize; i >= 0; i--)			//loops through and does the exact same thing as done on paper
 	{
 		int counter = 0;
 		int carry = 0;
 		int j = valueOneSize + counterTwo;
-		for(int k = 0; k < zeroCounter; k++)				//this tacks the zeros on as we go down
+		for(int k = 0; k < zeroCounter; k++)		//this tacks the zeros on as we go down
 		{
 			tempArr.arrInt[j] = 0;
 			j--;
@@ -488,7 +488,7 @@ MyInt operator/(const MyInt& valueOne, const MyInt& valueTwo)
 	int counterTwo = 0;
 	int i = 0;
 
-	do													//grabs the first number we need to divide by
+	do							//grabs the first number we need to divide by
 	{
 		tempArrThree.arrInt[i] = valueOne.arrInt[i];
 		i++;
@@ -502,7 +502,7 @@ MyInt operator/(const MyInt& valueOne, const MyInt& valueTwo)
 		counter++;
 	}
 
-	for(int j = 0; j < len; j++)						//does pretty simple long division along with division by subtractions
+	for(int j = 0; j < len; j++)				//does pretty simple long division along with division by subtractions
 	{
 		int temp = 0;
 		while(tempArrThree >= valueTwo)
@@ -530,9 +530,9 @@ MyInt operator/(const MyInt& valueOne, const MyInt& valueTwo)
 
 MyInt operator%(const MyInt& valueOne, const MyInt& valueTwo)
 {
-	MyInt tempArr;						//this does the mod = a - (a/b)b equation 
+	MyInt tempArr;				//this does the mod = a - (a/b)b equation 
 	tempArr = valueOne / valueTwo;
-	if(tempArr == 0)					//if the Array is zero after division value is equal to valueOne
+	if(tempArr == 0)			//if the Array is zero after division value is equal to valueOne
 	{
 		tempArr = valueOne;
 		return tempArr;
@@ -564,7 +564,7 @@ MyInt& MyInt::operator++()
 	return *this;
 }
 	
-MyInt MyInt::operator++(int)		//sends back orginal value but while adding 1 to MyInt
+MyInt MyInt::operator++(int)			//sends back orginal value but while adding 1 to MyInt
 {
 	MyInt tempArr;
 	tempArr = *this;
