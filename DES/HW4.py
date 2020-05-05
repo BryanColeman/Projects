@@ -191,8 +191,6 @@ def main():
     plain_text = input('Enter text to encrypt (\"Exit\" to quit): ')
     while(plain_text.lower() != 'exit'):
         key = [str(randint(0,1)) for _ in range(56)]
-        print(key)
-
         print(f'Encrypted text: {encrypt(plain_text,key)}')
         print(f'Decrypted text: {decrypt(encrypt(plain_text,key),key)}')
 
